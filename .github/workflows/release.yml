@@ -1,0 +1,57 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version (e.g. 0.1.0). Without a tag, the release will be a draft.'
+        required: true
+        default: '0.0.0-dev'
+
+permissions:
+  contents: write
+
+jobs:
+  build-and-release:
+    runs-on: macos-14
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Resolve version
+        id: version
+        run: |
+          if [[ "${GITHUB_REF}" == refs/tags/v* ]]; then
+            echo "version=${GITHUB_REF#refs/tags/v}" >> "$GITHUB_OUTPUT"
+            echo "is_tag=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "version=${{ github.event.inputs.version }}" >> "$GITHUB_OUTPUT"
+            echo "is_tag=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Show toolchain
+        run: |
+          swift --version
+          xcodebuild -version || true
+
+      - name: Build & package
+        run: bash scripts/package.sh "${{ steps.version.outputs.version }}"
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: VibeMove-${{ steps.version.outputs.version }}
+          path: dist/VibeMove-${{ steps.version.outputs.version }}.zip
+          if-no-files-found: error
+
+      - name: Create GitHub Release
+        if: steps.version.outputs.is_tag == 'true'
+        uses: softprops/action-gh-release@v2
+        with:
+          files: dist/VibeMove-${{ steps.version.outputs.version }}.zip
+          generate_release_notes: true
+          draft: false
+          prerelease: false

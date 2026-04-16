@@ -1,0 +1,17 @@
+.build/
+.swiftpm/
+Package.resolved
+.DS_Store
+*.xcodeproj/
+*.xcworkspace/
+xcuserdata/
+dist/
+ 
+# AI Agent folders
+.claude/
+.gemini/
+.antigravity/
+ 
+# Release assets
+FlowGym-v1.0.0.zip
+FlowGym-v1.0.0-macOS.zip
