@@ -551,7 +551,7 @@ guard mode == "hand" || mode == "body" else {
     exit(1)
 }
 
-print("FlowGym — mode: \(mode)")
+print("牛马健身 — mode: \(mode)")
 if mode == "hand" {
     print("  👍 Thumbs up (tap, toggle)      → Fn tap (Typeless dictation)")
     print("  👌 Thumb + index pinch          → Enter")

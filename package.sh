@@ -3,13 +3,14 @@
 # VibeMove App Packaging Script
 # -----------------------------
 
-APP_NAME="FlowGym"
+APP_NAME="牛马健身"
+INTERNAL_NAME="FlowGym"
 APP_BUNDLE="${APP_NAME}.app"
 CONTENTS="${APP_BUNDLE}/Contents"
 MACOS="${CONTENTS}/MacOS"
 RESOURCES="${CONTENTS}/Resources"
 
-echo "📦 正在编译 FlowGym (Release 模式)..."
+echo "📦 正在编译 $INTERNAL_NAME (Release 模式)..."
 swift build -c release
 
 if [ $? -ne 0 ]; then
@@ -22,7 +23,7 @@ mkdir -p "${MACOS}"
 mkdir -p "${RESOURCES}"
 
 echo "🚚 正在拷贝二进制文件与图标..."
-cp ".build/release/${APP_NAME}" "${MACOS}/${APP_NAME}"
+cp ".build/release/${INTERNAL_NAME}" "${MACOS}/${APP_NAME}"
 cp "VibeIcon.icns" "${RESOURCES}/VibeIcon.icns"
 
 echo "📝 正在生成 Info.plist..."

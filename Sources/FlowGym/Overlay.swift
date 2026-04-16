@@ -385,7 +385,7 @@ final class SkeletonView: NSView {
     }
 
     private func drawHeader() {
-        let title = "FlowGym"
+        let title = "牛马健身"
         let titleAttrs: [NSAttributedString.Key: Any] = [
             .font: NSFont.systemFont(ofSize: 9, weight: .semibold),
             .foregroundColor: NSColor.white.withAlphaComponent(0.55),
@@ -450,7 +450,7 @@ final class HelpOverlayView: NSView {
             .font: NSFont.systemFont(ofSize: 16, weight: .bold),
             .foregroundColor: NSColor.systemYellow,
         ]
-        let title = "FlowGym 健身手册"
+        let title = "牛马健身 健身手册"
         title.draw(at: NSPoint(x: 20, y: 15), withAttributes: titleAttrs)
 
         let helpItems = [
